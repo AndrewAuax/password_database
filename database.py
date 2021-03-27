@@ -73,7 +73,7 @@ def conn_to_db():  # return a cursor
         [sg.Text("Database:", font="Calibri 20"), sg.InputText(key='-DB-', size=(20, 4))],
         [sg.Text("User:", font="Calibri 20"), sg.InputText(key='-USER-', size=(20, 4))],
         [sg.Text("Password:", font="Calibri 20"), sg.InputText(key='-PASS-', size=(20, 4))],
-        [sg.Button('Login'), sg.Button('Exit')]
+        [sg.Button('Connect'), sg.Button('Exit')]
     ]
 
     window = sg.Window(title="Access to your Database", layout=layout)
@@ -82,7 +82,7 @@ def conn_to_db():  # return a cursor
         event, values = window.read()
         if event in (sg.WIN_CLOSED, 'Exit'):
             break
-        if event == 'Login':
+        if event == 'Connect':
             try:
                 conn = psycopg2.connect(host=values['-HOST-'], database=values['-DB-'], user=values['-USER-'], password=values['-PASS-'])
                 curs = conn.cursor()
