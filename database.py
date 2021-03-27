@@ -127,10 +127,6 @@ def main():
             add_pass(curs, values, new_pass)
 
     window.close()
-
-    curs.execute("SELECT * FROM credentials;")
-    print(curs.fetchall())
-
     curs.close()
     connection.close()
 
