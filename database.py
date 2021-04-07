@@ -85,6 +85,7 @@ def conn_to_db():  # return a cursor
         if event == 'Connect':
             try:
                 conn = psycopg2.connect(host=values['-HOST-'], database=values['-DB-'], user=values['-USER-'], password=values['-PASS-'])
+                conn.set_session(autocommit=False)
                 curs = conn.cursor()
 
                 sg.PopupQuickMessage(f"[+] Correctly connected to {values['-DB-']}, welcome {values['-USER-']}!")
@@ -119,6 +120,8 @@ def main():
     while True:
         event, values = window.read()
         if event in (sg.WIN_CLOSED, 'Exit'):
+            curs.execute("SELECT * from credentials;")
+            print(curs.fetchall())
             break
         if event == "Generate random password":
             new_pass = gen_pass(values['-LENGTH-'])
@@ -128,6 +131,7 @@ def main():
 
     window.close()
     curs.close()
+    connection.commit()
     connection.close()
 
 
